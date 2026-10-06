@@ -1,9 +1,12 @@
 import http from "node:http";
+import { router } from "./Router.js";
  
-function requestListener(_req, res) {
-  res.end("Hola Codeable");
-}
- console.log("¡Aquí se construirá un servidor web increíble! :)");
+const PORT = 3000;
  
-const server = http.createServer(requestListener);
-server.listen(3000);
+const server = http.createServer((req, res) => {
+  router(req, res);
+});
+ 
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
