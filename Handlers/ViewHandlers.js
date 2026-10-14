@@ -1,6 +1,6 @@
-import { sendHtml } from "../Utils/Response.js";
+import { HttpError } from "../Utils/Errors.js";
 import { getLayout } from "../Utils/html.js";
-
+import { sendHtml, sendHtmlError } from "../Utils/Response.js";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { parseUrlEncoded } from "../Utils/BodyParser.js";
@@ -10,23 +10,17 @@ const MESSAGES_FILE = path.join(DATA_DIR, "messages.json");
  
 export async function postContact(req, res) {
   let body;
-  try {
+ try {
     body = await parseUrlEncoded(req);
   } catch {
-    const status = 500; // Internal Server Error
-    res.writeHead(status);
-    return res.end();
+    return sendHtmlError(res, "Error interno del servidor", 500); // Cambio aplicado
   }
  
   const { name, email, message } = body;
  
   if (!name || !email || !message) {
-    const status = 400; // Bad Request
-    res.writeHead(status);
-    return res.end();
-  }
- 
-  // Inicializamos messages como un array vacío.
+  throw new HttpError("Faltan campos requeridos", 400);
+}
   let messages = [];
  
   // Intentamos leer los mensajes existentes del archivo JSON.
