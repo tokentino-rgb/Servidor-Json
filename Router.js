@@ -2,7 +2,6 @@ import { staticHandler } from "./Handlers/StaticHandler.js";
 import { sendHtmlError, sendJsonError } from "./Utils/Response.js";
 import { getHealth, getTime } from "./Handlers/ApiHandlers.js";
 import { getHome, getNewContact, postContact } from "./Handlers/ViewHandlers.js";
-import { sendHtmlError } from "./Utils/Response.js"; // 1. Nueva importación agregada
 
 export async function router(req, res) {
   const pathname = req.url;

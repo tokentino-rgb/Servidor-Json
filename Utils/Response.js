@@ -10,7 +10,6 @@ export function sendHtml(res, html, status = 200) {
   res.end(html);
 }
  
-// Una sola copia de la función
 export function sendHtmlError(res, message, status = 500) {
   const content = `
     <h1>Error ${status}</h1>
@@ -19,4 +18,8 @@ export function sendHtmlError(res, message, status = 500) {
   `;
   const html = getLayout(`Error ${status}`, content);
   sendHtml(res, html, status);
+} // <-- AGREGA ESTA LLAVE PARA CERRAR sendHtmlError
+ 
+export function sendJsonError(res, message, status = 500) {
+  sendJson(res, { error: message }, status);
 }
